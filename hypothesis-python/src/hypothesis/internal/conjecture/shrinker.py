@@ -22,7 +22,7 @@ from collections import defaultdict
 import attr
 
 from hypothesis.internal.compat import hbytes, hrange, int_from_bytes, int_to_bytes
-from hypothesis.internal.conjecture.data import Overrun, Status, TestResult
+from hypothesis.internal.conjecture.data import ConjectureResult, Overrun, Status
 from hypothesis.internal.conjecture.floats import (
     DRAW_FLOAT_LABEL,
     float_to_lex,
@@ -751,7 +751,7 @@ class Shrinker(object):
         self.__changed_blocks.add(i)
 
     def update_shrink_target(self, new_target):
-        assert isinstance(new_target, TestResult)
+        assert isinstance(new_target, ConjectureResult)
         if self.shrink_target is not None:
             current = self.shrink_target.buffer
             new = new_target.buffer

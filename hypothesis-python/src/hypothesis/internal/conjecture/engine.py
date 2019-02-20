@@ -38,10 +38,10 @@ from hypothesis.internal.compat import (
 from hypothesis.internal.conjecture.data import (
     MAX_DEPTH,
     ConjectureData,
+    ConjectureResult,
     Overrun,
     Status,
     StopTest,
-    TestResult,
 )
 from hypothesis.internal.conjecture.datatree import DataTree
 from hypothesis.internal.conjecture.shrinker import Shrinker, sort_key
@@ -811,7 +811,7 @@ class ConjectureRunner(object):
 
         def check_result(result):
             assert result is Overrun or (
-                isinstance(result, TestResult) and result.status != Status.OVERRUN
+                isinstance(result, ConjectureResult) and result.status != Status.OVERRUN
             )
             return result
 

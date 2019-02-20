@@ -154,7 +154,7 @@ MAX_DEPTH = 100
 
 
 @attr.s(slots=True)
-class TestResult(object):
+class ConjectureResult(object):
     """Result class storing the parts of ConjectureData that we
     will care about after the original ConjectureData has outlived its
     usefulness."""
@@ -222,13 +222,13 @@ class ConjectureData(object):
 
     def as_result(self):
         """Convert the result of running this test into
-        either an Overrun object or a TestResult."""
+        either an Overrun object or a ConjectureResult."""
 
         assert self.frozen
         if self.status == Status.OVERRUN:
             return Overrun
         if self.__result is None:
-            self.__result = TestResult(
+            self.__result = ConjectureResult(
                 status=self.status,
                 interesting_origin=self.interesting_origin,
                 buffer=self.buffer,
