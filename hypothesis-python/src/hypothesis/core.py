@@ -672,7 +672,6 @@ class StateForActualGivenExecution(object):
 
             ran_example = ConjectureData.for_buffer(falsifying_example.buffer)
             self.__was_flaky = False
-            print(info)
             assert info.__expected_exception is not None
             try:
                 self.execute(
