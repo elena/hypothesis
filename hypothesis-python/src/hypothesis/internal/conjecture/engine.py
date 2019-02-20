@@ -616,7 +616,11 @@ class ConjectureRunner(object):
             # exit early here.
             has_non_forced = False
 
-            for b in zero_data.blocks:
+            # It's impossible to fall out of this loop normally because if we
+            # did then that would mean that all blocks are writes, so we would
+            # already have triggered the exhaustedness check on the tree and
+            # finished running.
+            for b in zero_data.blocks:  # pragma: no branch
                 if b.start >= self.cap:
                     break
                 if not b.forced:
