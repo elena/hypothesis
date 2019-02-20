@@ -38,6 +38,19 @@ TOP_LABEL = calc_label_from_name("top")
 DRAW_BYTES_LABEL = calc_label_from_name("draw_bytes() in ConjectureData")
 
 
+class ExtraInformation(object):
+    """A class for holding shared state on a ``ConjectureData`` that should
+    be added to the final ``ConjectureResult``."""
+
+    def __repr__(self):
+        return "ExtraInformation(%s)" % (
+            ", ".join(["%s=%r" % (k, v) for k, v in self.__dict__.items()]),
+        )
+
+    def has_information(self):
+        return bool(self.__dict__)
+
+
 class Status(IntEnum):
     OVERRUN = 0
     INVALID = 1
@@ -166,6 +179,7 @@ class ConjectureResult(object):
     examples = attr.ib()
     has_discards = attr.ib()
     output = attr.ib()
+    extra_information = attr.ib()
 
     index = attr.ib(init=False)
 
@@ -212,6 +226,7 @@ class ConjectureData(object):
 
         top = self.start_example(TOP_LABEL)
         assert top.depth == 0
+        self.extra_information = ExtraInformation()
 
     def __repr__(self):
         return "ConjectureData(%s, %d bytes%s)" % (
@@ -236,6 +251,9 @@ class ConjectureData(object):
                 blocks=self.blocks,
                 has_discards=self.has_discards,
                 output=self.output,
+                extra_information=self.extra_information
+                if self.extra_information.has_information()
+                else None,
             )
         return self.__result
 
